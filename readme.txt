@@ -14,7 +14,7 @@ OPcache dashboard designed for WordPress
 
 As you know, OPcache has no management page. This plugins offers you the OPcache dashboard designed for WordPress.
 
-## Notice
+= Notice =
 * **Important**: To use this plugin, check following.
 	1. **PHP 5.5 or later**, Did you compile PHP with *--enable-opcache option*?
 	2. **PHP 5.4 or earlier**, Did you installed *PECL ZendOpcache*?
