@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
 	init();
 	set_text("memory");
 	display();
+	var document_width = $(document).width();
 
 	function init() {
 		$graph = $('#graph').css('position', 'relative');
@@ -96,7 +97,15 @@ jQuery(document).ready(function($) {
 			display();
 		});
 
-	$( window ).resize(function() {
+	$(window).resize(function() {
+		if($(document).width() != document_width) {
+			re_init();
+			display();
+			document_width = $(document).width();
+		}
+	});
+
+	$("#collapse-menu").click(function() {
 		re_init();
 		display();
 	});
