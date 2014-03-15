@@ -1,6 +1,6 @@
 <?php
 class OPcache_List_Table extends WP_List_Table {
-	public $data = array();
+	private $data = array();
 
 	function __construct($data) {
 		global $status, $page;
@@ -16,10 +16,10 @@ class OPcache_List_Table extends WP_List_Table {
 	function extra_tablenav($which) {
 		switch($which) {
 			case 'top':
-				_e('Extra Table Navigation(Top)');
+				//esc_html_e('Extra Table Navigation(Top)');
 				break;
 			case 'bottom':
-				_e('Extra Table Navigation(Bottom)');
+				//esc_html_e('Extra Table Navigation(Bottom)');
 				break;
 		}
 	}
@@ -38,7 +38,7 @@ class OPcache_List_Table extends WP_List_Table {
 
 	function get_sortable_columns() {
 		$sortable_columns = array(
-			'script_path'		=> array('full_path', false),
+			'script_path'		=> array('full_path', true),
 			'hits'			=> array('hits', false),
 			'memory_consumption'	=> array('memory_consumption', false),
 			'last_used_timestamp'	=> array('last_used_timestamp', false),
@@ -53,7 +53,7 @@ class OPcache_List_Table extends WP_List_Table {
 	}
 
 	function column_script_path($item){
-		return sprintf('<strong><span class="row-title">%1$s</span></strong>', $item['full_path']);
+		return sprintf('<strong><span class="row-path">%1$s</span></strong>', $item['full_path']);
 	}
 
 	function column_default($item, $column_name){
@@ -61,6 +61,8 @@ class OPcache_List_Table extends WP_List_Table {
 			case 'last_used_timestamp':
 			case 'timestamp':
 				return date(__('j M, Y @ G:i:s', 'opcache'), $item[$column_name]);
+			case 'memory_consumption':
+				return OPcache_dashboard::size($item[$column_name]);
 			default:
 				return $item[$column_name];
 		}
