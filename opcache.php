@@ -3,7 +3,7 @@
  * Plugin Name: OPcache Dashboard
  * Plugin URI: http://wordpress.org/plugins/opcache/
  * Description: OPcache dashboard designed for WordPress
- * Version: 0.2.2
+ * Version: 0.2.3
  * Author: Daisuke Takahashi(Extend Wings)
  * Author URI: http://www.extendwings.com
  * License: AGPLv3 or later
@@ -30,7 +30,7 @@ class OPcache_dashboard {
 
 	const PHP_URL = 'http://php.shield-9.org';
 
-	const VERSION = '0.2.2beta1';
+	const VERSION = '0.2.3';
 	
 	private $data;
 	private $hooks;
@@ -53,6 +53,23 @@ class OPcache_dashboard {
 			add_action('network_admin_menu', array(&$this, 'add_admin_menu'));
 		add_action('wp_loaded', array(&$this, 'register_assets'));
 		add_filter('plugin_row_meta', array(&$this, 'plugin_row_meta'), 10, 2);
+		
+		// Reset all cache when Upgrader Process complete
+		add_action('upgrader_process_complete', array(&$this, 'version_up_reset'), 10, 2);
+	}
+
+	function version_up_reset() {
+		opcache_reset();
+
+		$hook_extra =  array(
+			'action' => 'update',
+			'type' => 'core',
+			'bulk' => true,
+		);
+		if(func_num_args() >= 2)
+			$hook_extra = array_merge($hook_extra, func_get_arg(2));
+
+		trigger_error("Your WordPress is successfully updated! Detail:\n".var_export($hook_extra, true), E_USER_NOTICE);
 	}
 
 	function register_assets() {
@@ -147,22 +164,26 @@ class OPcache_dashboard {
 		$screen = get_current_screen();
 
 		if(isset($_GET['action']) && isset($_GET['_wpnonce']) && check_admin_referer('opcache_ctrl','_wpnonce')) {
+			$template = '<div class="updated"><p>%1$s <a href="%2$s">%3$s</a></p></div>';
+			$url = admin_url(sprintf('admin.php?page=%1$s', $_REQUEST['page']));
+			$link_text = esc_html__('Click here to refresh information', 'opcache');
+
 			switch($_GET['action']) {
 				case 'reset':
 					opcache_reset();
-					printf('<div class="updated"><p>%s</p></div>', esc_html__('Reseted!', 'opcache'));
+					printf($template, esc_html__('Reseted!', 'opcache'), $url, $link_text);
 					break;
 				case 'invalidate':
 					$status = opcache_get_status();
 					foreach($status['scripts'] as $script)
 						opcache_invalidate($script['full_path']);
-					printf('<div class="updated"><p>%s</p></div>', esc_html__('Invalidated!', 'opcache'));
+					printf($template, esc_html__('Invalidated!', 'opcache'), $url, $link_text);
 					break;
 				case 'invalidate_force':
 					$status = opcache_get_status();
 					foreach($status['scripts'] as $script)
 						opcache_invalidate($script['full_path'], true);
-					printf('<div class="updated"><p>%s</p></div>', esc_html__('Force Invalidated!', 'opcache'));
+					printf($template, esc_html__('Force Invalidated!', 'opcache'), $url, $link_text);
 					break;
 			}
 		}
