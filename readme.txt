@@ -4,7 +4,7 @@ Donate link: http://www.extendwings.com/donate/
 Tags: PHP, Zend, OPcache, monitor, stat, stats, status, server, cache, dashboard
 Requires at least: 3.8
 Tested up to: 3.9
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 License: AGPLv3 or later
 License URI: http://www.gnu.org/licenses/agpl.txt
 
@@ -12,7 +12,10 @@ OPcache dashboard designed for WordPress
 
 == Description ==
 
-As you know, OPcache has no management page. This plugins offers you the OPcache dashboard designed for WordPress.
+As you know, OPcache has no management page. This plugin offers you the OPcache dashboard designed for WordPress.
+
+Are you experiencing the problem using WordPress with OPcache? It may occur after Upgrading Core/Plugin/Theme.
+This plugin reset all cache after upgrading so that you don't have to see "Please update!" repeatedly.
 
 ***WARNING***:This is experimental and in development. All files in this repo is licensed under [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](http://www.gnu.org/licenses/agpl.txt).
 
@@ -83,6 +86,11 @@ If you're in supported environment, please create [pull request](https://github.
 2. Status Page
 
 == Changelog ==
+
+= 0.2.4 =
+* Small Bug fix.
+* More on [GitHub](https://github.com/shield-9/opcache-dashboard/releases/tag/0.2.4).
+* [`git diff 0.2.3...0.2.4`](https://github.com/shield-9/opcache-dashboard/compare/0.2.3...0.2.4)
 
 = 0.2.3 =
 * WordPress Bug Fix: Reset all caches after updating WordPress Core/Plugins/Themes.
