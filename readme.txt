@@ -3,7 +3,7 @@ Contributors: extendwings, headonfire,
 Donate link: http://www.extendwings.com/donate/
 Tags: PHP, Zend, OPcache, monitor, stat, stats, status, server, cache, dashboard
 Requires at least: 3.8
-Tested up to: 3.9
+Tested up to: 4.0
 Stable tag: 0.2.4
 License: AGPLv3 or later
 License URI: http://www.gnu.org/licenses/agpl.txt
@@ -16,8 +16,6 @@ As you know, OPcache has no management page. This plugin offers you the OPcache 
 
 Are you experiencing the problem using WordPress with OPcache? It may occur after Upgrading Core/Plugin/Theme.
 This plugin reset all cache after upgrading so that you don't have to see "Please update!" repeatedly.
-
-***WARNING***:This is experimental and in development. All files in this repo is licensed under [GNU AFFERO GENERAL PUBLIC LICENSE, Version 3](http://www.gnu.org/licenses/agpl.txt).
 
 ### Notice
 * **Important**: To use this plugin, check following.
